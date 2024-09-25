@@ -10,35 +10,17 @@ html(lang="en")
     form(id="searchForm")
       label(for="department") Departamento:
       select(id="department" name="departmentId")
-        option(value="") Selecciona un departamento
-        option(value="1") Artes Decorativas Americanas
-        option(value="3") Arte del Antiguo Cercano Oriente
-        option(value="4") Armas y Armaduras
-        option(value="5") Artes de África, Oceanía y las Américas
-        option(value="6") Arte Asiático
-        option(value="7") El Claustro
-        option(value="8") El Instituto del Vestuario
-        option(value="9") Dibujos y Grabados
-        option(value="10") Arte Egipcio
-        option(value="11") Pinturas Europeas
-        option(value="12") Escultura y Artes Decorativas Europeas
-        option(value="13") Arte Griego y Romano
-        option(value="14") Arte Islámico
-        option(value="15") La Colección Robert Lehman
-        option(value="16") Las Bibliotecas
-        option(value="17") Arte Medieval
-        option(value="18") Instrumentos Musicales
-        option(value="19") Fotografías
-        option(value="21") Arte Moderno
+        option(value="") Elige una opción
+        each depto in departamentosTraducidos
+          option(value = depto.departmentId) #{depto.displayName}
       br
       label(for="geoLocation") Localización:
-      input(type="text" id="geoLocation" placeholder="Ej. France") 
+      input(type="text" id="geoLocation" name="location" placeholder="Ej. France") 
       br
       label(for="keyword") Palabra clave:
-      input(type="text" id="keyword" placeholder="Buscar...") 
+      input(type="text" id="keyword" name="keyword" placeholder="Buscar...") 
       br
       button(type="submit") Buscar
-
     div#results.grid
     div#pagination
     script(src="function.js")
