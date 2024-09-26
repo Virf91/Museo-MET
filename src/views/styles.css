@@ -2,12 +2,13 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 20px;
-    background-color: #f4f4f4; /* Color de fondo suave */
+    background-image: url('img/bground.jpg'); /* Cambia esto a la ruta de tu imagen */
 }
 
 h1 {
-    color: #333; /* Color del título */
+    color: bisque;
     text-align: center; /* Centra el título */
+    font-size: 40px;
 }
 
 h2 {
@@ -15,12 +16,14 @@ h2 {
 }
 
 p {
-    color: blueviolet; /* Color del texto de párrafos */
+    color:black; /* Color del texto de párrafos */
     text-align: center; /* Centra el texto */
+    font-size:20px ;
+    
 }
 
 #searchForm {
-    background-color: #ffffff; /* Fondo blanco para el formulario */
+    background-color:bisque; /* Fondo blanco para el formulario */
     border-radius: 8px; /* Bordes redondeados */
     padding: 20px; /* Espaciado interno */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
@@ -51,7 +54,7 @@ select:focus, input[type="text"]:focus {
 }
 
 button[type="submit"] {
-    background-color: #007bff; /* Color de fondo azul */
+    background-color:burlywood; /* Color de fondo azul */
     color: white; /* Color del texto */
     padding: 10px; /* Espaciado interno */
     border: none; /* Sin borde */

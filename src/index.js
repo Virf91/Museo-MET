@@ -1,3 +1,4 @@
+// import express from "express";
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -17,23 +18,84 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "views")));
 app.use(express.json()); // Middleware para parsear JSON
 
-
-function traducirTexto(texto, idiomaOrigen = 'en', idiomaDestino = 'es') {
+// Función para traducir texto usando node-google-translate-skidz
+const traducirTexto = async (texto) => {
+    if (!texto) return ''; // Devuelve una cadena vacía si no hay texto
     return new Promise((resolve, reject) => {
         translate({
             text: texto,
-            source: idiomaOrigen,
-            target: idiomaDestino
-        }, function(result) {
+            source: 'en', // Idioma origen: inglés
+            target: 'es' // Idioma destino: español
+        }, (result) => {
             if (result && result.translation) {
                 resolve(result.translation);
             } else {
-                console.error(`Error en la traducción del texto: "${texto}"`);
-                reject(new Error('Error en la traducción'));
+                reject('Error en la traducción');
             }
-        });
-    });
-}
+        });
+    });
+};
+
+// import path from "path";
+// import { fileURLToPath } from "url";
+// import axios from "axios";
+// import cors from "cors";
+// import translate from 'node-google-translate-skidz'; // Asegúrate de tener esta biblioteca instalada
+
+// const app = express();
+// const PORT = 3000; // Cambia a 3001 si es necesario
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
+
+// // Habilita CORS
+// app.use(cors());
+// app.set("view engine", "pug");
+// app.set("views", path.join(__dirname, "views"));
+// app.use(express.static(path.join(__dirname, "views")));
+// app.use(express.json()); // Middleware para parsear JSON
+
+// // Función para traducir texto usando node-google-translate-skidz
+// const traducirTexto = async (texto) => {
+//     if (!texto) return ''; // Devuelve una cadena vacía si no hay texto
+//     return new Promise((resolve, reject) => {
+//         translate({
+//             text: texto,
+//             source: 'en', // Idioma origen: inglés
+//             target: 'es' // Idioma destino: español
+//         }, (result) => {
+//             if (result && result.translation) {
+//                 resolve(result.translation);
+//             } else {
+//                 reject('Error en la traducción');
+//             }
+//         });
+//     });
+// };
+
+// Función para traducir objetos
+const traducirObjetos = async (objetos) => {
+    console.log('Objetos a traducir:', objetos);
+    const objetosTraducidos = [];
+
+    for (const objeto of objetos) {
+        try {
+            const tituloTraducido = await traducirTexto(objeto.title || '');
+            const culturaTraducida = await traducirTexto(objeto.culture || '');
+            const dinastiaTraducida = await traducirTexto(objeto.dynasty || '');
+
+            objetosTraducidos.push({
+                ...objeto,
+                title: tituloTraducido,
+                culture: culturaTraducida,
+                dynasty: dinastiaTraducida
+            });
+        } catch (error) {
+            console.error('Error en la traducción:', error);
+            objetosTraducidos.push(objeto); // Agrega el objeto original en caso de error
+        }
+    }
+    return objetosTraducidos;
+};
 
 // Ruta principal
 app.get("/", async (req, res) => {
@@ -42,7 +104,7 @@ app.get("/", async (req, res) => {
         const departamentos = response.data.departments;
         const departamentosTraducidos  = await Promise.all(departamentos.map(async (departamento) => {
             try {
-                const nombreTraducido = await traducirTexto(departamento.displayName,'en', 'es');
+                const nombreTraducido = await traducirTexto(departamento.displayName);
                 return {
                     ...departamento,
                     displayName:nombreTraducido
@@ -59,7 +121,7 @@ app.get("/", async (req, res) => {
     }catch (error) {
         console.error('Error al obtener departamentos', error);
         res.status(500).send('Error en el servidor');
-    }
+    }
 });
 
 // Ruta para buscar objetos 
@@ -130,6 +192,4 @@ app.get("/object/:objectID", async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
-
-
 
