@@ -17,7 +17,7 @@ Este proyecto es una aplicación web que permite a los usuarios buscar y visuali
 1. Clona este repositorio en tu máquina local:
 git clone https://github.com/tu_usuario/museo-project.git
 
-2.Navega al directorio del proyecto:
+2. Navega al directorio del proyecto:
 cd museo-project
 
 3. Instala las dependencias necesarias:
