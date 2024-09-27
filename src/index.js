@@ -1,13 +1,12 @@
-// import express from "express";
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import axios from "axios";
 import cors from "cors";
-import translate from 'node-google-translate-skidz'; // Asegúrate de tener esta biblioteca instalada
+import translate from 'node-google-translate-skidz';
 
 const app = express();
-const PORT = 3000; // Cambia a 3001 si es necesario
+const PORT = 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -35,42 +34,6 @@ const traducirTexto = async (texto) => {
         });
     });
 };
-
-// import path from "path";
-// import { fileURLToPath } from "url";
-// import axios from "axios";
-// import cors from "cors";
-// import translate from 'node-google-translate-skidz'; // Asegúrate de tener esta biblioteca instalada
-
-// const app = express();
-// const PORT = 3000; // Cambia a 3001 si es necesario
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
-
-// // Habilita CORS
-// app.use(cors());
-// app.set("view engine", "pug");
-// app.set("views", path.join(__dirname, "views"));
-// app.use(express.static(path.join(__dirname, "views")));
-// app.use(express.json()); // Middleware para parsear JSON
-
-// // Función para traducir texto usando node-google-translate-skidz
-// const traducirTexto = async (texto) => {
-//     if (!texto) return ''; // Devuelve una cadena vacía si no hay texto
-//     return new Promise((resolve, reject) => {
-//         translate({
-//             text: texto,
-//             source: 'en', // Idioma origen: inglés
-//             target: 'es' // Idioma destino: español
-//         }, (result) => {
-//             if (result && result.translation) {
-//                 resolve(result.translation);
-//             } else {
-//                 reject('Error en la traducción');
-//             }
-//         });
-//     });
-// };
 
 // Función para traducir objetos
 const traducirObjetos = async (objetos) => {
@@ -163,10 +126,10 @@ app.get("/search", async (req, res) => {
             return objectResponse.data;
         }));
 
-        // Traducir los objetos antes de enviarlos como respuesta
-        const objetosTraducidos = await traducirObjetos(objects);
+// Traducir los objetos antes de enviarlos como respuesta
+    const objetosTraducidos = await traducirObjetos(objects);
         
-        res.json(objetosTraducidos); // Envía los objetos traducidos como respuesta
+    res.json(objetosTraducidos);
     } catch (error) {
         console.error("Error fetching data from the API:", error.message);
         res.status(500).json({ message: "Error al buscar datos." });
@@ -192,4 +155,3 @@ app.get("/object/:objectID", async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
-

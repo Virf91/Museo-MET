@@ -1,3 +1,4 @@
+console.log('funcionando');
 document.addEventListener('DOMContentLoaded', () => {
     const departmentSelect = document.getElementById('department');
     const searchForm = document.getElementById('searchForm');
@@ -6,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentPage = 1;
     let totalPages = 1;
-    const resultsPerPage = 20; // 4 columns * 5 rows
+    const resultsPerPage = 20; // Cantidad de resultados por página
     let objectIds = []; // Almacena los ID de los objetos para la paginación
 
     // Cargar departamentos al iniciar
@@ -22,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => console.error('Error loading departments:', error));
 
-    // Manejar la búsqueda
+    // Manejar formulario de la búsqueda
     searchForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const departmentId = departmentSelect.value;
@@ -75,6 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     card.className = 'card';
                     card.innerHTML = `
                         <img src="${object.primaryImageSmall || '/image/sinImagen.jpg'}" alt="${object.title}" class="img-small">
+                        <div class="date">Fecha: ${object.objectDate || 'Desconocida'}</div>
                         <h3>${object.title}</h3>
                         <p>Cultura: ${object.culture || 'Desconocida'}</p>
                         <p>Dinastía: ${object.dynasty || 'Desconocida'}</p>
